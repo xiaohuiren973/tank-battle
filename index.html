@@ -360,6 +360,12 @@
                 m[MAP_ROWS - 3][baseCol] = TILE.BRICK;
                 m[MAP_ROWS - 3][baseCol + 1] = TILE.BRICK;
 
+                // Clear spawn positions on the bottom border for player
+                m[MAP_ROWS - 1][4] = TILE.EMPTY;
+                m[MAP_ROWS - 1][5] = TILE.EMPTY;
+                m[MAP_ROWS - 1][MAP_COLS - 5] = TILE.EMPTY;
+                m[MAP_ROWS - 1][MAP_COLS - 6] = TILE.EMPTY;
+
                 // Keep player/enemy spawn areas clear
                 const clearZones = [
                     { row: MAP_ROWS - 3, col: baseCol - 2 }, { row: MAP_ROWS - 3, col: baseCol + 2 },
@@ -877,8 +883,7 @@
                     for (let col = left; col <= right; col++) {
                         if (row >= 0 && row < MAP_ROWS && col >= 0 && col < MAP_COLS) {
                             const tile = map[row][col];
-                            if (tile === TILE.BRICK || tile === TILE.STEEL || tile === TILE.BASE || tile === TILE
-                                .WATER) {
+                            if (tile === TILE.BRICK || tile === TILE.STEEL || tile === TILE.WATER) {
                                 return true;
                             }
                         } else {
@@ -953,9 +958,9 @@
 
             // ==================== Game Logic ====================
             function spawnPlayer() {
-                const spawnCol = Math.floor(MAP_COLS / 2);
+                const spawnCol = 4;
                 const spawnX = spawnCol * TILE_SIZE + (TILE_SIZE - (TILE_SIZE - 4)) / 2;
-                const spawnY = (MAP_ROWS - 2) * TILE_SIZE + (TILE_SIZE - (TILE_SIZE - 4)) / 2;
+                const spawnY = (MAP_ROWS - 1) * TILE_SIZE + (TILE_SIZE - (TILE_SIZE - 4)) / 2;
                 player = new Tank(spawnX, spawnY, DIR.UP, '#4ecdc4', true);
                 player.invincible = INVINCIBLE_FRAMES;
             }
